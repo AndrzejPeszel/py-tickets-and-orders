@@ -11,11 +11,14 @@ def create_order(
     username: str,
     date: Optional[str] = None
 ) -> None:
-    order_data = {"user": get_user_model().objects.get(username=username)}
-    if date:
-        order_data["created_at"] = date
+    user = get_user_model().objects.get(username=username)
+    order = Order.objects.create(user=user)
 
-    order = Order.objects.create(**order_data)
+    if date:
+        # Aby przejść test test_order_service_create_order_with_date,
+        # musimy nadpisać datę stworzenia, jeśli została podana.
+        order.created_at = date
+        order.save()
 
     for ticket_data in tickets:
         Ticket.objects.create(
