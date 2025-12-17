@@ -15,8 +15,6 @@ def create_order(
     order = Order.objects.create(user=user)
 
     if date:
-        # Aby przejść test test_order_service_create_order_with_date,
-        # musimy nadpisać datę stworzenia, jeśli została podana.
         order.created_at = date
         order.save()
 
