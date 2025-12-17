@@ -2,17 +2,15 @@ from typing import Optional
 from django.contrib.auth import get_user_model
 from django.db.models import Model
 
-User = get_user_model()
-
 
 def create_user(
-        username: str,
-        password: str,
-        email: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None
+    username: str,
+    password: str,
+    email: Optional[str] = None,
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None
 ) -> Model:
-    return User.objects.create_user(
+    return get_user_model().objects.create_user(
         username=username,
         password=password,
         email=email or "",
@@ -22,18 +20,18 @@ def create_user(
 
 
 def get_user(user_id: int) -> Model:
-    return User.objects.get(id=user_id)
+    return get_user_model().objects.get(id=user_id)
 
 
 def update_user(
-        user_id: int,
-        username: Optional[str] = None,
-        password: Optional[str] = None,
-        email: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None
+    user_id: int,
+    username: Optional[str] = None,
+    password: Optional[str] = None,
+    email: Optional[str] = None,
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None
 ) -> None:
-    user = User.objects.get(id=user_id)
+    user = get_user(user_id)
     if username:
         user.username = username
     if email:
@@ -45,6 +43,5 @@ def update_user(
     if password:
         user.set_password(password)
     user.save()
-
 
 ave()

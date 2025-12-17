@@ -34,7 +34,7 @@ def get_movies(
     title: Optional[str] = None,
     genres_ids: Optional[list[int]] = None,
     actors_ids: Optional[list[int]] = None
-) -> QuerySet:
+) -> QuerySet[Movie]:
     queryset = Movie.objects.all()
 
     if title:
