@@ -43,4 +43,3 @@ def update_user(
     if password:
         user.set_password(password)
     user.save()
-    
