@@ -1,14 +1,17 @@
+from typing import Optional, Any
 from django.db import transaction, IntegrityError
+from django.db.models import QuerySet
 from db.models import Movie
 
 
 @transaction.atomic
-def create_movie(title=None, description=None, genres_ids=None, actors_ids=None, **kwargs):
-    """
-    Tworzy film w transakcji atomowej.
-    Wyrzuca ValueError przy błędzie bazy (IntegrityError),
-    aby spełnić oczekiwania testu sprawdzającego atomowość.
-    """
+def create_movie(
+    title: Optional[str] = None,
+    description: Optional[str] = None,
+    genres_ids: Optional[list[int]] = None,
+    actors_ids: Optional[list[int]] = None,
+    **kwargs: Any
+) -> Optional[Movie]:
     actual_title = title or kwargs.get("movie_title")
 
     try:
@@ -24,15 +27,14 @@ def create_movie(title=None, description=None, genres_ids=None, actors_ids=None,
 
         return movie
     except IntegrityError:
-        # Test oczekuje, że w przypadku błędu (np. NOT NULL)
-        # funkcja wyrzuci ValueError.
         raise ValueError("Invalid movie data")
 
 
-def get_movies(title=None, genres_ids=None, actors_ids=None):
-    """
-    Pobiera filmy z filtrowaniem i sortowaniem po ID.
-    """
+def get_movies(
+    title: Optional[str] = None,
+    genres_ids: Optional[list[int]] = None,
+    actors_ids: Optional[list[int]] = None
+) -> QuerySet:
     queryset = Movie.objects.all()
 
     if title:

@@ -1,10 +1,7 @@
-import os
 from pathlib import Path
 
-# To jest linia, której brakowało (definiuje BASE_DIR)
 BASE_DIR = Path(__file__).resolve().parent
 
-# Kluczowe ustawienie dla testów (bez stref czasowych)
 USE_TZ = False
 
 INSTALLED_APPS = [
@@ -22,5 +19,4 @@ DATABASES = {
     }
 }
 
-# Musisz mieć też zdefiniowany SECRET_KEY, żeby Django ruszyło
 SECRET_KEY = "django-insecure-test-key"
